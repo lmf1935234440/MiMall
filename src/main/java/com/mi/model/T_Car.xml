@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_CarDao">
+
+	<!-- 添加商品到购物车  -->
+	<insert id="car_insert" useGeneratedKeys="true" keyProperty="car_id" parameterType="T_Car">
+		insert into t_car (car_id,user_id,commodity_id,commodity_size,car_account) 
+			values (#{car_id},#{user_id},#{commodity_id},#{commodity_size},#{car_account})
+	</insert>
+	
+	
+	<!-- 修改购物车中指定商品信息  -->
+	<update id="car_update" parameterType="T_Car">
+		update t_car set user_id=#{user_id},commodity_id=#{commodity_id},commodity_size=#{commodity_size},car_account=#{car_account} where car_id=#{car_id}
+	</update>
+
+	  
+	<!-- 删除购物车中指定商品 -->
+	<delete id="car_delete" parameterType="T_Car">
+		delete from t_car where car_id = #{car_id}
+	</delete>
+	
+	<delete id="car_deletebyuserid" parameterType="String">
+		delete from t_car where user_id = #{user_id}
+	</delete>
+	
+	<!-- 查询购物车中全部商品ByUser_id -->
+	<select id="car_select" resultType="T_Car">
+		select * from t_car where user_id = #{user_id}
+	</select>
+	
+	
+
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_PicDao">
+
+	<!-- 添加轮播图图片  -->
+	<insert id="pic_insert" useGeneratedKeys="true" keyProperty="pic_id" parameterType="T_Pic">
+		insert into t_pic (pic_id,pic_url,pic_return) values (#{pic_id},#{pic_url},#{pic_return})
+	</insert>
+	
+	  
+	
+	<!-- 删除轮播图图片 -->
+	<delete id="pic_delete" parameterType="T_Pic">
+		delete from t_pic where pic_id = #{pic_id}
+	</delete>
+	
+	
+	
+	<!-- 查询全部轮播图图片 -->
+	<select id="pic_select" resultType="T_Pic">
+		select * from t_pic
+	</select>
+	
+	
+
+
+</mapper>

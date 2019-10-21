@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+		<typeAlias alias="T_User" type="com.mi.model.T_User" />
+		<typeAlias alias="T_Address" type="com.mi.model.T_Address" />
+		<typeAlias alias="T_Type" type="com.mi.model.T_Type" />
+		<typeAlias alias="T_Commodity" type="com.mi.model.T_Commodity" />
+		<typeAlias alias="T_Picture" type="com.mi.model.T_Picture" />
+		<typeAlias alias="T_Car" type="com.mi.model.T_Car" />
+		<typeAlias alias="T_Order" type="com.mi.model.T_Order" />
+		<typeAlias alias="Commodityinformation" type="com.mi.dto.Commodityinformation" />
+		<typeAlias alias="T_Pic" type="com.mi.model.T_Pic" />
+	</typeAliases>
+	
+	
+    <mappers>
+		<mapper resource="com/mi/model/T_User.xml" />
+		<mapper resource="com/mi/model/T_Address.xml" />
+		<mapper resource="com/mi/model/T_Type.xml" />
+		<mapper resource="com/mi/model/T_Commodity.xml" />
+		<mapper resource="com/mi/model/T_Picture.xml" />
+		<mapper resource="com/mi/model/T_Car.xml" />
+		<mapper resource="com/mi/model/T_Order.xml" />
+		<mapper resource="com/mi/model/T_Pic.xml" />
+	</mappers>
+
+
+
+</configuration>

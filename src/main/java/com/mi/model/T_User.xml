@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_UserDao">
+
+	<!-- 添加用户  -->
+	<insert id="user_insert" useGeneratedKeys="true" keyProperty="user_id" parameterType="T_User">
+		insert into t_user 
+			(user_id,  role_id,  user_username,  user_password,  user_nickname,   user_phone,    user_date) values 
+			(#{user_id},#{role_id},#{user_username},#{user_password},#{user_nickname},#{user_phone},#{user_date})
+	</insert>
+	
+	
+	<!-- 更新用户  -->
+	<update id="user_update" parameterType="T_User">
+		update t_user set user_username=#{user_username},user_password=#{user_password},user_nickname=#{user_nickname},user_phone=#{user_phone},role_id=#{role_id},user_date=#{user_date} where user_id=#{user_id}
+	</update>
+
+	  
+	<!-- 删除用户 -->
+	<delete id="user_delete" parameterType="String">
+		delete from t_user where user_id = #{user_id}
+	</delete>
+	
+	
+	
+	
+	<!-- 用户全部信息结果集 -->
+	<resultMap type="T_User" id="T_UserResultMap">
+		<id column="user_id" property="user_id"/>
+		<result column="user_username" property="user_username"/>
+		<result column="user_password" property="user_password"/>
+		<result column="user_nickname" property="user_nickname"/>
+		<result column="user_phone" property="user_phone"/>
+		<result column="user_date" property="user_date"/>
+		<collection property="user_addresslist" ofType="T_Address">
+			<id column="address_id" property="address_id"/>
+			<result column="address_info" property="address_info"/>
+		</collection>
+	</resultMap>
+	
+	
+	
+	<!-- 查询用户ById -->
+	<select id="user_selectone" resultMap="T_UserResultMap" parameterType="T_User">
+		select a.*,b.address_id,b.address_info from t_user a left join t_address b on a.user_id=b.user_id 
+		where a.user_id=#{user_id}
+	</select>
+	
+	
+	
+	<!-- 分页多条件查询全部用户 -->
+	<select id="user_select" resultType="T_User" parameterType="Map">
+		select * from t_user where 1 and 1
+		
+		<if test="user_username!=null">
+			and user_username like #{user_username}
+		</if>		        
+        <if test="user_phone!=null">
+        	and user_phone like #{user_phone}
+        </if>
+        <if test="role_id!=0">
+        	and role_id != 0
+        </if>
+        <if test="role_id==0">
+        	and role_id = 0
+        </if>
+       order by user_date limit #{begin},#{pagesize} 
+	</select>
+	
+	
+	<!-- 多条件统计用户数量 -->
+	<select id="user_selectcount" resultType="int" parameterType="Map">
+		select count(*) from t_user where 1 and 1
+		<if test="user_username!=null">
+			and user_username like #{user_username}
+		</if>
+        <if test="user_phone!=null">
+        	and user_phone like #{user_phone}
+        </if>
+        <if test="role_id!=0">
+        	and role_id != 0
+        </if>
+        <if test="role_id==0">
+        	and role_id = 0
+        </if>
+	</select>
+
+
+
+
+	<!-- 用户登录判断 -->
+	<select id="user_login" resultType="T_User" parameterType="T_User">
+		select * from t_user where user_username = #{user_username} and user_password = #{user_password}
+	</select>
+
+
+	<!-- 用户名有效性查询 -->
+	<select id="user_avalibe" resultType="T_User" parameterType="T_User">
+		select * from t_user where user_username = #{user_username}
+	</select>
+
+
+
+</mapper>
+

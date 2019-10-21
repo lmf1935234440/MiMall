@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_AddressDao">
+
+	<!-- 添加地址 -->
+	<insert id="address_insert"  useGeneratedKeys="true" keyProperty="user_id" parameterType="T_Address">
+		insert into t_address (address_id,address_info,user_id) values(#{address_id},#{address_info},#{user_id})
+	</insert>
+
+	
+	<!-- 修改地址 -->
+	<update id="address_update" parameterType="T_Address">
+		update t_address set address_info = #{address_info},user_id=#{user_id} where address_id=#{address_id}
+	</update>
+
+	
+	<!-- 删除地址 -->
+	<delete id="address_delete" parameterType="T_Address">
+		delete from t_address where address_id = #{address_id}
+	</delete>
+
+
+	<!-- 删除地址ByUser_Id -->
+	<delete id="address_deleteByUser_id" parameterType="String">
+		delete from t_address where user_id = #{user_id}
+	</delete>
+
+
+</mapper>
+

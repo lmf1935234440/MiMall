@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_PictureDao">
+
+	<!-- 添加图片  -->
+	<insert id="picture_insert" useGeneratedKeys="true" keyProperty="picture_id" parameterType="T_Picture">
+		insert into t_picture (picture_id,commodity_id,picture_url) values( #{picture_id},#{commodity_id},#{picture_url})
+	</insert>
+	
+	<!-- 删除图片 -->
+	<delete id="picture_delete" parameterType="T_Picture">
+		delete from t_picture where commodity_id = #{commodity_id}
+	</delete>
+	
+	<!-- 查询图片byCommodity_id -->
+	<select id="picture_select" parameterType="String" resultType="T_Picture">
+		select picture_id,picture_url from t_picture where commodity_id=#{commodity_id}
+	</select>
+	
+	
+	<!-- 删除图片ByCommodity_Id -->
+	<delete id="picture_deletebytypeid" parameterType="T_Commodity">
+		delete from t_picture where commodity_id in 
+			(select commodity_id from t_commodity where type_id = #{type_id})
+	</delete>
+	
+
+</mapper>

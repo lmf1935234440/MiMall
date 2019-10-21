@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_OrderDao">
+
+	<!-- 添加订单  -->
+	<insert id="order_insert" useGeneratedKeys="true" keyProperty="type_id" parameterType="T_Order">
+		insert into t_order (order_id,user_id,commodity_size,order_date,user_address) 
+			values (#{order_id},#{user_id},#{commodity_size},#{order_date},#{user_address})
+	</insert>
+	
+	
+	<!-- 更新订单  -->
+	<update id="order_update" parameterType="T_Order">
+		update t_order set commodity_size = #{commodity_size},user_address = #{user_address} where order_id = #{order_id}
+	</update>
+
+	  
+	<!-- 删除订单 -->
+	<delete id="order_delete" parameterType="T_Order">
+		delete from t_order where order_id = #{order_id}
+	</delete>
+	
+
+	<!-- 查询订单ByUser_id-->
+	<select id="order_selectbyuserid" resultType="T_Order" parameterType="T_Order">
+		select * from t_order where user_id = #{user_id}
+	</select>
+	
+	
+	<delete id="order_deletebyuserid" parameterType="String">
+		delete from t_order where user_id=#{user_id}
+	</delete>
+	
+	<!-- 查询全部订单-->
+	<select id="order_select" resultType="T_Order">
+		select * from t_order 
+	</select>
+
+
+</mapper>

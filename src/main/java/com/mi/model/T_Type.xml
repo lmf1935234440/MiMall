@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_TypeDao">
+
+	<!-- 添加分类  -->
+	<insert id="type_insert" useGeneratedKeys="true" keyProperty="type_id" parameterType="T_Type">
+		insert into t_type (type_id,type_name) values (#{type_id},#{type_name})
+	</insert>
+	
+	
+	<!-- 更新分类  -->
+	<update id="type_update" parameterType="T_Type">
+		update t_type set type_name = #{type_name} where type_id=#{type_id}
+	</update>
+
+	  
+	<!-- 删除分类 -->
+	<delete id="type_delete" parameterType="T_Type">
+		delete from t_type where type_id = #{type_id}
+	</delete>
+	
+	
+	
+	<!-- 查询全部分类 -->
+	<select id="type_select" resultType="T_Type">
+		select * from t_type
+	</select>
+	
+	
+
+
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mi.dao.T_CommodityDao">
+
+	<!-- 添加商品  -->
+	<insert id="commodity_insert" useGeneratedKeys="true" keyProperty="commodity_id" parameterType="T_Commodity">
+		insert into t_commodity (commodity_id,commodity_name,type_id,commodity_date,commodity_description,commodity_size)
+			values (#{commodity_id},#{commodity_name},#{type_id},#{commodity_date},#{commodity_description},#{commodity_size})
+	</insert>
+	
+	
+	<!-- 更新商品  -->
+	<update id="commodity_update" parameterType="T_Commodity">
+		update t_commodity set commodity_name=#{commodity_name},type_id=#{type_id},commodity_description=#{commodity_description},commodity_size=#{commodity_size} 
+			where commodity_id =#{commodity_id}
+	</update>
+
+	  
+	<!-- 删除商品 -->
+	<delete id="commodity_delete" parameterType="T_Commodity">
+		delete from t_commodity where commodity_id = #{commodity_id}
+	</delete>
+	
+	
+	<!-- 删除商品bytype_id -->
+	<delete id="commodity_deletebytypeid" parameterType="T_Commodity">
+		delete from t_commodity where type_id = #{type_id}
+	</delete>
+
+	
+	<!-- 查询商品 -->
+	
+	<!-- 商品结果集 -->
+	 <resultMap type="Commodityinformation" id="T_CommodityResultMap">
+		<id column="commodity_id" property="commodity_id"/>
+		<result column="commodity_name" property="commodity_name"/>
+		<result column="type_id" property="type_id"/>
+		<result column="type_name" property="type_name"/>
+		<result column="commodity_date" property="commodity_date"/>
+		<result column="commodity_description" property="commodity_description"/>
+		<result column="commodity_size" property="commodity_size"/>
+		<collection property="commodity_picturelist" ofType="T_Picture">
+			<id column="picture_id" property="picture_id"/>
+			<result column="picture_url" property="picture_url"/>
+		</collection>
+	</resultMap>
+	 
+	
+	
+	
+	<!-- 查询商品ById -->
+	<select id="commodity_selectById" resultMap="T_CommodityResultMap" parameterType="T_Commodity">
+		select a.*,b.picture_id,b.picture_url from t_commodity a left join t_picture b on a.commodity_id = b.commodity_id
+			where a.commodity_id=#{commodity_id}
+	</select>
+
+
+	<!-- 分页多条件查询全部商品 -->
+	<select id="commodity_select" resultMap="T_CommodityResultMap" parameterType="map" >
+		select a.*,b.type_name from t_type b,t_commodity a where a.type_id = b.type_id
+		
+		<if test="commodity_name!=null">
+			and a.commodity_name like #{commodity_name}
+		</if>		        
+        <if test="type_id!=-1">
+        	and a.type_id = #{type_id}
+        </if>
+        limit #{begin},#{pagesize}
+        
+	</select>
+	
+	
+	<!-- 分页多条件查询全部商品 -->
+	<select id="commodity_selectbyname" resultMap="T_CommodityResultMap" parameterType="map" >
+		select a.*,b.type_name from t_type b,t_commodity a where a.type_id = b.type_id
+		
+		<if test="commodity_name!=null">
+			and (a.commodity_name like #{commodity_name} or b.type_name like #{commodity_name} )
+		</if>
+        
+	</select>
+	
+	
+	<!-- 多条件统计商品数量 -->
+	<select id="commodity_selectbynamecount" resultType="int" parameterType="map">
+		select count(*) from t_type b,t_commodity a where a.type_id = b.type_id
+		
+		<if test="commodity_name!=null">
+			and (a.commodity_name like #{commodity_name} or b.type_name like #{commodity_name} )
+		</if>	        
+
+	</select>
+	
+	
+	
+	<!-- 多条件统计商品数量 -->
+	<select id="commodity_selectcount" resultType="int" parameterType="map">
+		select count(*) from t_commodity where 1 and 1
+		
+		<if test="commodity_name!=null">
+			and commodity_name like #{commodity_name}
+		</if>		        
+        <if test="type_id!=-1">
+        	and type_id = #{type_id}
+        </if>
+	</select>
+
+
+	
+	<!-- 分类查询商品 -->
+	<select id="commodity_selectBytype" resultMap="T_CommodityResultMap" parameterType="int">
+		select a.*,b.picture_id,b.picture_url from t_commodity a left join t_picture b on a.commodity_id = b.commodity_id
+			where a.type_id = #{type_id} group by a.commodity_id limit 0,8
+	</select>
+
+
+
+
+
+
+</mapper>
